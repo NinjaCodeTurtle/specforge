@@ -30,3 +30,12 @@ MD033: false
 
 # Allow trailing punctuation in headings (used in templates)
 MD026: false
+
+# Allow non-sequential ordered list prefixes (templates use explicit numbering)
+MD029: false
+
+# Allow tables without surrounding blank lines
+MD058: false
+
+# Allow multiple H1 headings (templates have frontmatter title + doc title)
+MD025: false

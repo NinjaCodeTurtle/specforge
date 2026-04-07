@@ -1,0 +1,15 @@
+# SpecForge lychee link checker configuration
+# Exclude placeholder and localhost URLs in templates
+
+exclude = [
+  "localhost",
+  "127\\.0\\.0\\.1",
+  "example\\.com",
+  "your-domain\\.com",
+  "your-project",
+  "api\\.your",
+  "\\[.*\\]",
+]
+
+# Skip mail addresses
+exclude_mail = true
