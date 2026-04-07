@@ -1,7 +1,7 @@
 # SpecForge — AI Agent Configuration
 
 ## Project Overview
-SpecForge is a comprehensive framework for creating production-ready software specifications. It guides teams through 6 phases of pre-development documentation: Discovery → Market Analysis → Requirements → UX Design → Architecture → Implementation Planning.
+SpecForge is a comprehensive framework for crafting production-ready software specifications and driving their implementation. It guides teams through 7 phases: Discovery → Market Analysis → Requirements → UX Design → Architecture → Implementation Planning → Implementation.
 
 ## Key Commands
 - `/specforge:discover` — Run Phase 1: Discovery & Vision
@@ -10,18 +10,19 @@ SpecForge is a comprehensive framework for creating production-ready software sp
 - `/specforge:design-ux` — Run Phase 4: UX & Design Specification
 - `/specforge:design-architecture` — Run Phase 5: Architecture & Technical Design
 - `/specforge:plan-implementation` — Run Phase 6: Implementation Planning
+- `/specforge:implement` — Run Phase 7: Implementation (code, test, verify)
 - `/specforge:validate` — Cross-phase validation and quality gate check
-- `/specforge:generate-all` — Full lifecycle orchestration (all 6 phases)
+- `/specforge:generate-all` — Full lifecycle orchestration (all 7 phases)
 
 ## Project Structure
 ```
-templates/           — 15 production-grade document templates (01-15)
+templates/           — 22 production-grade document templates (01-22)
 framework/
-  phases/            — Phase guides (01-06) with README.md each
-  agents/            — 7 agent definitions (strategist, analyst, architect, etc.)
-  checklists/        — Quality gate checklists and readiness assessment
+  phases/            — Phase guides (01-07) with README.md each
+  agents/            — 8 agent definitions (strategist through implementation-lead)
+  checklists/        — Quality gate checklists, readiness assessment, implementation gates
   workflows/         — Full lifecycle, quick-spec, and brownfield workflows
-skills/              — 8 skill definitions (SKILL.md files for slash commands)
+skills/              — 9 skill definitions (SKILL.md files for slash commands)
 output/              — Generated documents go here (per-project)
 examples/            — Example outputs for reference
 project/             — Project management docs (plan, decisions, progress)
@@ -47,3 +48,6 @@ project/             — Project management docs (plan, decisions, progress)
 - Every architecture choice must address security, scalability, and maintainability
 - Every epic must trace back to requirements
 - Every story must have Definition of Done criteria
+- Every implemented story must have passing tests for all acceptance criteria
+- Implementation must match specs exactly — no workarounds, no shortcuts
+- Three-tier quality gates for implementation: Story (PASS/FAIL) → Sprint (7/10) → Release (8/10)

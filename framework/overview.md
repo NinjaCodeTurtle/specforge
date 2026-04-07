@@ -2,9 +2,9 @@
 
 ## What is SpecForge?
 
-SpecForge is a comprehensive, AI-assisted framework for creating production-ready software specifications. It guides teams through the complete pre-development documentation lifecycle — from initial product vision through market validation to implementation-ready specifications.
+SpecForge is a comprehensive, AI-assisted framework for crafting production-ready software specifications and driving their implementation. It guides teams through the complete software development lifecycle — from initial product vision through market validation, specification, and all the way to working, tested code.
 
-**SpecForge ensures no critical document is missed before a single line of code is written.**
+**SpecForge ensures no critical document is missed and every line of code traces back to a specification.**
 
 ## Why SpecForge?
 
@@ -31,7 +31,7 @@ SpecForge synthesizes best practices from three leading frameworks:
 | Traceability | Industry (IEEE/ISO) | Requirements trace to design decisions trace to implementation stories |
 | Verifiable specifications | Harness Eng SDD | Every requirement has acceptance criteria; every spec has validation |
 
-## The Six Phases
+## The Seven Phases
 
 ```
   ╔═══════════════╗    ╔═══════════════╗    ╔═══════════════╗
@@ -47,10 +47,11 @@ SpecForge synthesizes best practices from three leading frameworks:
   ╚═══════════════╝    ╚═══════════════╝    ╚═══════════════╝
          │
          ▼
-  ┌───────────────┐
-  │  Development   │  ──▶  Hand off to BMAD / GStack / Harness Engineering
-  │   Handoff     │
-  └───────────────┘
+  ╔═══════════════╗
+  ║   Phase 7     ║
+  ║Implementation ║───▶  Working, tested, production-ready code
+  ║  (Code+Test)  ║
+  ╚═══════════════╝
 ```
 
 ### Phase 1: Discovery & Vision
@@ -89,6 +90,12 @@ SpecForge synthesizes best practices from three leading frameworks:
 **Artifacts**: Epic Breakdown, Sprint Plan, Implementation Roadmap, Traceability Matrix
 **Key Activities**: Epic decomposition, story mapping, sprint planning, risk assessment, launch planning
 
+### Phase 7: Implementation
+**Agent**: Implementation Lead ("Engineer")
+**Purpose**: Transform specifications into working, tested, production-ready code
+**Artifacts**: Project Scaffold Report, Story Implementation Reports, Sprint Verification Reports, Release Verification Report, Progress Tracker, Dependency Manifest, CI/CD Pipeline Spec
+**Key Activities**: Project scaffolding, story-by-story coding, test writing (unit/integration/e2e), self-review, three-tier quality gates (Story → Sprint → Release), progress tracking
+
 ## Quality Gates
 
 Every phase transition requires passing a scored checklist. The **Orchestrator** agent enforces these gates:
@@ -100,14 +107,24 @@ Every phase transition requires passing a scored checklist. The **Orchestrator**
 | Gate 3 | Requirements → UX Design | Requirements complete, consistent, testable, prioritized |
 | Gate 4 | UX Design → Architecture | User flows defined, design constraints documented |
 | Gate 5 | Architecture → Implementation | Architecture sound, APIs specified, data model complete |
-| Gate 6 | Implementation → Dev Handoff | Stories estimated, dependencies mapped, risks mitigated |
+| Gate 6 | Planning → Implementation | Stories estimated, dependencies mapped, risks mitigated |
 
 Each gate scores items 0-10. A minimum average of **7/10** is required to proceed.
+
+### Phase 7 Implementation Gates (Three Tiers)
+
+Phase 7 has its own internal quality gates at three granularities:
+
+| Tier | Scope | Scoring | Threshold |
+|------|-------|---------|-----------|
+| Story Gate | Per user story | Binary PASS/FAIL (12 items) | ALL must pass |
+| Sprint Gate | Per sprint | 0-10 (10 items) | Average >= 7/10 |
+| Release Gate | Per milestone | 0-10 (12 items) | Average >= 8/10 |
 
 ## Three Workflow Modes
 
 ### 1. Full Lifecycle
-All 6 phases, for greenfield products. Use when building something new from scratch.
+All 7 phases, for greenfield products. Use when building something new from scratch.
 **Skill**: `/specforge:generate-all`
 
 ### 2. Quick Spec
@@ -128,11 +145,12 @@ Starts with discovery of existing system, then runs Phases 3-6. Use when adding 
 | UX Strategist | Advocate | 4 | User needs | "Will users love using this?" |
 | Solutions Architect | Builder | 5 | Technical soundness | "Can we build this reliably at scale?" |
 | Delivery Manager | Planner | 6 | Delivery readiness | "Can the team execute this plan?" |
+| Implementation Lead | Engineer | 7 | Code quality & spec fidelity | "Does the code faithfully implement every spec?" |
 | Orchestrator | — | All | Cross-phase coordination | "Are we ready for the next phase?" |
 
 ## Template Library
 
-SpecForge provides 15 production-grade templates in `templates/`:
+SpecForge provides 22 production-grade templates in `templates/`:
 
 | # | Template | Phase | Purpose |
 |---|----------|-------|---------|
@@ -151,19 +169,22 @@ SpecForge provides 15 production-grade templates in `templates/`:
 | 13 | Sprint Plan | 6 | Plan sprints and releases |
 | 14 | Implementation Roadmap | 6 | Chart the path to delivery |
 | 15 | Traceability Matrix | 6 | Trace requirements through to implementation |
+| 16 | Project Scaffold Report | 7 | Document project setup and configuration |
+| 17 | Story Implementation Report | 7 | Per-story verification report |
+| 18 | Sprint Verification Report | 7 | Per-sprint quality and progress report |
+| 19 | Release Verification Report | 7 | Go/no-go release assessment |
+| 20 | Implementation Progress Tracker | 7 | Living progress tracking document |
+| 21 | Dependency Manifest | 7 | Justified dependency documentation |
+| 22 | CI/CD Pipeline Spec | 7 | Pipeline configuration and quality thresholds |
 
-## Complementary, Not Competing
+## End-to-End Coverage
 
-SpecForge explicitly stops at **implementation-ready specifications**. Its output is designed to feed into:
-- **BMAD** Phase 4 (Implementation)
-- **GStack** Build phase
-- **Harness Engineering** SDD Execution sessions
-
-SpecForge handles the "thinking before coding" that these frameworks assume has already happened.
+SpecForge covers the complete software lifecycle — from "Is this worth building?" to "Ship it." Phases 1-6 produce specifications; Phase 7 implements them. For teams that prefer to use their own coding workflow, Phase 6 output can also feed directly into **BMAD**, **GStack**, or **Harness Engineering**.
 
 ## Getting Started
 
 1. Run `/specforge:discover` to start Phase 1
-2. Or run `/specforge:generate-all` for the full lifecycle
+2. Or run `/specforge:generate-all` for the full lifecycle (Phases 1-7)
 3. Or jump to any phase with the corresponding skill command
-4. Use `/specforge:validate` at any point to check readiness
+4. Run `/specforge:implement` after Phases 1-6 to begin building
+5. Use `/specforge:validate` at any point to check readiness

@@ -22,7 +22,8 @@ The #1 cause of failed software projects is poor specifications. Teams rush to c
   Planning          & Tech Design    Specification
       │
       ▼
-  Development Handoff  ──▶  BMAD / GStack / Harness Engineering
+  Phase 7
+  Implementation  ──▶  Working, tested, production-ready code
 ```
 
 | Phase | Agent | Key Output |
@@ -33,6 +34,7 @@ The #1 cause of failed software projects is poor specifications. Teams rush to c
 | 4. UX & Design Specification | UX Strategist | UX Specification |
 | 5. Architecture & Technical Design | Solutions Architect | Architecture Doc, API Spec, Data Model, Tech Decisions |
 | 6. Implementation Planning | Delivery Manager | Epic Breakdown, Sprint Plan, Roadmap, Traceability Matrix |
+| 7. Implementation | Implementation Lead | Working code, tests, verification reports, CI/CD |
 
 ## Quick Start
 
@@ -55,7 +57,7 @@ npx github:NinjaCodeTurtle/specforge init --tool claude-code --yes
 ```
 /specforge:generate-all
 ```
-Runs all 6 phases with quality gates between each.
+Runs all 7 phases with quality gates between each.
 
 ### Single Phase
 ```
@@ -65,6 +67,7 @@ Runs all 6 phases with quality gates between each.
 /specforge:design-ux             # Phase 4
 /specforge:design-architecture   # Phase 5
 /specforge:plan-implementation   # Phase 6
+/specforge:implement             # Phase 7
 ```
 
 ### Validation
@@ -76,7 +79,7 @@ Runs all 6 phases with quality gates between each.
 
 | Mode | When to Use | Phases |
 |------|------------|--------|
-| **Full Lifecycle** | New product from scratch | All 6 |
+| **Full Lifecycle** | New product from scratch | All 7 |
 | **Quick Spec** | Well-understood feature | 3 + 5 |
 | **Brownfield** | Existing system enhancement | 0 (discovery) + 3-6 |
 
@@ -87,22 +90,15 @@ specforge/
 ├── CLAUDE.md                    # AI agent configuration
 ├── README.md                    # This file
 │
-├── templates/                   # 15 production-grade document templates
-│   ├── 01-product-brief.md
-│   ├── 02-market-analysis.md
-│   ├── 03-competitive-analysis.md
-│   ├── 04-prd.md
-│   ├── 05-user-stories.md
-│   ├── 06-use-cases.md
-│   ├── 07-ux-spec.md
-│   ├── 08-architecture.md
-│   ├── 09-api-spec.md
-│   ├── 10-data-model.md
-│   ├── 11-tech-decisions.md
-│   ├── 12-epic-breakdown.md
-│   ├── 13-sprint-plan.md
-│   ├── 14-implementation-roadmap.md
-│   └── 15-traceability-matrix.md
+├── templates/                   # 22 production-grade document templates
+│   ├── 01-product-brief.md      # ... through 15-traceability-matrix.md (Phases 1-6)
+│   ├── 16-project-scaffold.md
+│   ├── 17-story-implementation-report.md
+│   ├── 18-sprint-verification-report.md
+│   ├── 19-release-verification-report.md
+│   ├── 20-implementation-progress-tracker.md
+│   ├── 21-dependency-manifest.md
+│   └── 22-cicd-pipeline-spec.md
 │
 ├── framework/
 │   ├── overview.md              # Detailed framework overview
@@ -112,30 +108,34 @@ specforge/
 │   │   ├── 03-requirements-engineering/
 │   │   ├── 04-ux-design-spec/
 │   │   ├── 05-architecture-design/
-│   │   └── 06-implementation-planning/
-│   ├── agents/                  # 7 specialized agent definitions
+│   │   ├── 06-implementation-planning/
+│   │   └── 07-implementation/
+│   ├── agents/                  # 8 specialized agent definitions
 │   │   ├── strategist.md
 │   │   ├── market-analyst.md
 │   │   ├── requirements-analyst.md
 │   │   ├── ux-strategist.md
 │   │   ├── solutions-architect.md
 │   │   ├── delivery-manager.md
+│   │   ├── implementation-lead.md
 │   │   └── orchestrator.md
 │   ├── checklists/              # Quality gates and readiness assessment
-│   │   ├── phase-gates.md       # 6 phase transition checklists
-│   │   └── readiness-assessment.md  # 43-item development readiness check
+│   │   ├── phase-gates.md       # Phase transition checklists
+│   │   ├── readiness-assessment.md  # 43-item development readiness check
+│   │   └── implementation-gates.md  # Three-tier implementation quality gates
 │   └── workflows/               # Execution workflows
 │       ├── full-lifecycle.md
 │       ├── quick-spec.md
 │       └── brownfield.md
 │
-├── skills/                      # 8 invocable skill definitions
+├── skills/                      # 9 invocable skill definitions
 │   ├── discover/SKILL.md
 │   ├── analyze-market/SKILL.md
 │   ├── define-requirements/SKILL.md
 │   ├── design-ux/SKILL.md
 │   ├── design-architecture/SKILL.md
 │   ├── plan-implementation/SKILL.md
+│   ├── implement/SKILL.md
 │   ├── validate/SKILL.md
 │   └── generate-all/SKILL.md
 │

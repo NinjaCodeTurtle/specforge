@@ -13,6 +13,7 @@ const EXPECTED_SKILLS = [
   { dir: 'design-ux',            name: 'specforge:design-ux' },
   { dir: 'design-architecture',  name: 'specforge:design-architecture' },
   { dir: 'plan-implementation',  name: 'specforge:plan-implementation' },
+  { dir: 'implement',            name: 'specforge:implement' },
   { dir: 'validate',             name: 'specforge:validate' },
   { dir: 'generate-all',         name: 'specforge:generate-all' },
 ];
