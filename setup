@@ -95,9 +95,9 @@ get_install_path() {
   case "$tool" in
     claude-code)
       if [ "$INSTALL_SCOPE" = "global" ]; then
-        echo "$HOME/.claude/skills/specforge"
+        echo "$HOME/.claude/commands"
       else
-        echo ".claude/skills/specforge"
+        echo ".claude/commands"
       fi
       ;;
     cursor)
@@ -123,15 +123,20 @@ install_claude_code() {
 
   local count=0
   for skill_dir in "$SKILLS_DIR"/*/; do
-    local skill_name
+    local skill_name cmd_name
     skill_name="$(basename "$skill_dir")"
     if [ -f "$skill_dir/SKILL.md" ]; then
-      cp -r "$skill_dir" "$target/$skill_name"
+      # Extract command name from frontmatter (e.g. "specforge:discover")
+      cmd_name="$(sed -n '/^name:/s/^name: *"\?\(.*\)"\?$/\1/p' "$skill_dir/SKILL.md" | head -1)"
+      if [ -z "$cmd_name" ]; then
+        cmd_name="specforge:${skill_name}"
+      fi
+      cp "$skill_dir/SKILL.md" "$target/${cmd_name}.md"
       count=$((count + 1))
     fi
   done
 
-  ok "Installed ${count} skills to ${target}/"
+  ok "Installed ${count} commands to ${target}/"
 }
 
 # Install skills for Cursor (generate .mdc files)

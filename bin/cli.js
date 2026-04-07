@@ -137,14 +137,18 @@ async function promptChoice(rl, question, choices, defaultChoice) {
 // ---------------------------------------------------------------------------
 
 function installForClaudeCode(skills, targetDir) {
-  const dest = join(targetDir, '.claude', 'skills', 'specforge');
+  // Install to .claude/commands/ so skills appear as slash commands
+  const dest = join(targetDir, '.claude', 'commands');
   mkdirSync(dest, { recursive: true });
 
   const installed = [];
   for (const skill of skills) {
-    const skillDest = join(dest, skill.dir);
-    cpSync(skill.path, skillDest, { recursive: true });
-    installed.push(skill.name);
+    // Create command file: .claude/commands/specforge:discover.md
+    const cmdName = skill.name; // e.g. "specforge:discover"
+    const cmdFile = join(dest, `${cmdName}.md`);
+    const content = readFileSync(join(skill.path, 'SKILL.md'), 'utf-8');
+    writeFileSync(cmdFile, content, 'utf-8');
+    installed.push(cmdName);
   }
   return { dest, installed };
 }
@@ -366,8 +370,8 @@ async function cmdUpdate(args) {
   const home = homedir();
 
   const locations = [
-    { tool: 'claude-code', path: join(cwd, '.claude', 'skills', 'specforge'),  scope: 'project' },
-    { tool: 'claude-code', path: join(home, '.claude', 'skills', 'specforge'), scope: 'global'  },
+    { tool: 'claude-code', path: join(cwd, '.claude', 'commands'),             scope: 'project' },
+    { tool: 'claude-code', path: join(home, '.claude', 'commands'),            scope: 'global'  },
     { tool: 'cursor',      path: join(cwd, '.cursor', 'rules'),               scope: 'project' },
     { tool: 'cursor',      path: join(home, '.cursor', 'rules'),              scope: 'global'  },
     { tool: 'codex',       path: join(cwd, '.codex', 'skills', 'specforge'),   scope: 'project' },
@@ -375,12 +379,14 @@ async function cmdUpdate(args) {
   ];
 
   const found = locations.filter(loc => {
+    if (!existsSync(loc.path)) return false;
     if (loc.tool === 'cursor') {
-      // Check for any specforge-*.mdc files
-      if (!existsSync(loc.path)) return false;
       return readdirSync(loc.path).some(f => f.startsWith('specforge-') && f.endsWith('.mdc'));
     }
-    return existsSync(loc.path);
+    if (loc.tool === 'claude-code') {
+      return readdirSync(loc.path).some(f => f.startsWith('specforge:') && f.endsWith('.md'));
+    }
+    return true;
   });
 
   if (found.length === 0) {

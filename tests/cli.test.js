@@ -100,15 +100,15 @@ describe('CLI — bin/cli.js', () => {
       rmSync(tmp, { recursive: true, force: true });
     });
 
-    it('creates .claude/skills/specforge/ with skill directories', () => {
-      const base = join(tmp, '.claude', 'skills', 'specforge');
+    it('creates .claude/commands/ with specforge command files', () => {
+      const base = join(tmp, '.claude', 'commands');
       assert.ok(existsSync(base), `Expected ${base} to exist`);
-      for (const skill of SKILLS) {
-        assert.ok(
-          existsSync(join(base, skill)),
-          `Expected skill directory "${skill}" inside ${base}`,
-        );
-      }
+      const files = readdirSync(base).filter(f => f.startsWith('specforge:'));
+      assert.ok(files.length >= 8, `Expected at least 8 specforge command files, got ${files.length}`);
+      assert.ok(
+        existsSync(join(base, 'specforge:discover.md')),
+        'Expected specforge:discover.md command file',
+      );
     });
   });
 
