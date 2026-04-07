@@ -1,0 +1,48 @@
+{
+  "name": "specforge",
+  "version": "0.1.0",
+  "description": "Comprehensive framework for crafting production-ready software specifications — from market analysis through architecture to implementation planning",
+  "keywords": [
+    "specforge",
+    "software-specifications",
+    "requirements-engineering",
+    "architecture",
+    "prd",
+    "market-analysis",
+    "ai-assisted",
+    "developer-tools"
+  ],
+  "homepage": "https://github.com/NinjaCodeTurtle/specforge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NinjaCodeTurtle/specforge.git"
+  },
+  "license": "Apache-2.0",
+  "author": "SpecForge Contributors",
+  "type": "module",
+  "bin": {
+    "specforge": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "framework/",
+    "templates/",
+    "examples/",
+    "setup",
+    "marketplace.json",
+    "CLAUDE.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test tests/skills.test.js tests/cli.test.js tests/setup.test.js",
+    "test:cli": "node --test tests/cli.test.js",
+    "test:setup": "node --test tests/setup.test.js",
+    "test:skills": "node --test tests/skills.test.js",
+    "lint": "node tests/lint-skills.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

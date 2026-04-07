@@ -1,0 +1,59 @@
+# Dependencies
+node_modules/
+
+# Generated output (per-project specifications)
+output/
+
+# Project internal tracking (plans, decisions, progress)
+project/
+
+# Sensitive data and secrets
+.env
+.env.*
+.env.local
+.env.*.local
+*.pem
+*.key
+*.cert
+*.p12
+*.pfx
+*.jks
+credentials.json
+secrets.json
+service-account*.json
+*.secret
+token.json
+.npmrc
+.yarnrc
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+._*
+
+# Editor files
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+*.orig
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage and test artifacts
+coverage/
+.nyc_output/
+
+# Build artifacts
+dist/
+build/

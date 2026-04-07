@@ -1,0 +1,25 @@
+{
+  "plugins": [
+    {
+      "name": "specforge",
+      "description": "SpecForge framework — craft production-ready software specifications from market analysis through architecture to implementation planning. 8 skills covering discovery, market analysis, requirements, UX design, architecture, implementation planning, validation, and full lifecycle orchestration.",
+      "version": "0.1.0",
+      "source": {
+        "type": "github",
+        "owner": "NinjaCodeTurtle",
+        "repo": "specforge"
+      },
+      "skills_directory": "skills",
+      "homepage": "https://github.com/NinjaCodeTurtle/specforge",
+      "license": "Apache-2.0",
+      "keywords": [
+        "specforge",
+        "specifications",
+        "requirements",
+        "architecture",
+        "prd",
+        "market-analysis"
+      ]
+    }
+  ]
+}

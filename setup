@@ -1,0 +1,308 @@
+#!/usr/bin/env bash
+# SpecForge - Setup Script
+# Installs skills for your AI coding tool of choice.
+#
+# Usage:
+#   ./setup                         # Interactive mode
+#   ./setup --tool claude-code      # Non-interactive for Claude Code
+#   ./setup --tool cursor           # Non-interactive for Cursor
+#   ./setup --tool codex            # Non-interactive for Codex
+#   ./setup --tool all              # Install for all detected tools
+#   ./setup --global                # Install to user-level (~/.claude/skills/)
+#   ./setup --no-prefix             # No prefix on skill names
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SKILLS_DIR="$SCRIPT_DIR/skills"
+VERSION="0.1.0"
+
+# Defaults
+TOOL=""
+INSTALL_SCOPE="project"  # project or global
+PREFIX="specforge"
+INTERACTIVE=true
+
+# Colors (if terminal supports them)
+if [ -t 1 ]; then
+  RED='\033[0;31m'
+  GREEN='\033[0;32m'
+  BLUE='\033[0;34m'
+  YELLOW='\033[0;33m'
+  CYAN='\033[0;36m'
+  MAGENTA='\033[0;35m'
+  BOLD='\033[1m'
+  DIM='\033[2m'
+  NC='\033[0m'
+else
+  RED='' GREEN='' BLUE='' YELLOW='' CYAN='' MAGENTA='' BOLD='' DIM='' NC=''
+fi
+
+info()  { echo -e "${BLUE}ℹ${NC} $*"; }
+ok()    { echo -e "${GREEN}✓${NC} $*"; }
+warn()  { echo -e "${YELLOW}⚠${NC} $*"; }
+err()   { echo -e "${RED}✗${NC} $*" >&2; }
+
+usage() {
+  cat <<EOF
+SpecForge Setup v${VERSION}
+
+Usage: ./setup [OPTIONS]
+
+Options:
+  --tool <name>     Target tool: claude-code, cursor, codex, all
+  --global          Install to user-level skill directory
+  --no-prefix       Disable skill prefix
+  --help            Show this help message
+
+Examples:
+  ./setup                              # Interactive setup
+  ./setup --tool claude-code --global  # Global Claude Code install
+  ./setup --tool all                   # Install for all detected tools
+EOF
+  exit 0
+}
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --tool)      TOOL="$2"; INTERACTIVE=false; shift 2 ;;
+    --global)    INSTALL_SCOPE="global"; shift ;;
+    --no-prefix) PREFIX=""; shift ;;
+    --help)      usage ;;
+    *)           err "Unknown option: $1"; usage ;;
+  esac
+done
+
+# Detect installed AI tools
+detect_tools() {
+  local tools=()
+  if command -v claude &>/dev/null || [ -d "$HOME/.claude" ]; then
+    tools+=("claude-code")
+  fi
+  if [ -d "$HOME/.cursor" ] || [ -d "$HOME/Library/Application Support/Cursor" ]; then
+    tools+=("cursor")
+  fi
+  if command -v codex &>/dev/null || [ -d "$HOME/.codex" ]; then
+    tools+=("codex")
+  fi
+  echo "${tools[@]}"
+}
+
+# Get install path for a tool
+get_install_path() {
+  local tool="$1"
+  case "$tool" in
+    claude-code)
+      if [ "$INSTALL_SCOPE" = "global" ]; then
+        echo "$HOME/.claude/skills/specforge"
+      else
+        echo ".claude/skills/specforge"
+      fi
+      ;;
+    cursor)
+      echo ".cursor/rules"
+      ;;
+    codex)
+      if [ "$INSTALL_SCOPE" = "global" ]; then
+        echo "$HOME/.codex/skills/specforge"
+      else
+        echo ".codex/skills/specforge"
+      fi
+      ;;
+  esac
+}
+
+# Install skills for Claude Code
+install_claude_code() {
+  local target
+  target="$(get_install_path claude-code)"
+  info "Installing skills to ${target}/"
+
+  mkdir -p "$target"
+
+  local count=0
+  for skill_dir in "$SKILLS_DIR"/*/; do
+    local skill_name
+    skill_name="$(basename "$skill_dir")"
+    if [ -f "$skill_dir/SKILL.md" ]; then
+      cp -r "$skill_dir" "$target/$skill_name"
+      count=$((count + 1))
+    fi
+  done
+
+  ok "Installed ${count} skills to ${target}/"
+}
+
+# Install skills for Cursor (generate .mdc files)
+install_cursor() {
+  local target=".cursor/rules"
+  info "Installing Cursor rules to ${target}/"
+
+  mkdir -p "$target"
+
+  for skill_dir in "$SKILLS_DIR"/*/; do
+    local skill_name skill_desc
+    skill_name="$(basename "$skill_dir")"
+    if [ ! -f "$skill_dir/SKILL.md" ]; then continue; fi
+
+    # Extract description from YAML frontmatter
+    skill_desc="$(sed -n '/^description:/s/^description: *"\?\(.*\)"\?$/\1/p' "$skill_dir/SKILL.md" | head -1)"
+
+    # Generate .mdc file from SKILL.md
+    local mdc_file="$target/specforge-${skill_name}.mdc"
+    {
+      echo "---"
+      echo "description: ${skill_desc}"
+      echo "globs:"
+      echo "alwaysApply: false"
+      echo "---"
+      echo ""
+      # Strip YAML frontmatter from SKILL.md and output the rest
+      sed '1,/^---$/{ /^---$/!d; }' "$skill_dir/SKILL.md" | sed '1,/^---$/d'
+    } > "$mdc_file"
+  done
+
+  ok "Generated Cursor rules in ${target}/"
+}
+
+# Install skills for Codex
+install_codex() {
+  local target
+  target="$(get_install_path codex)"
+  info "Installing skills to ${target}/"
+
+  mkdir -p "$target"
+
+  for skill_dir in "$SKILLS_DIR"/*/; do
+    local skill_name
+    skill_name="$(basename "$skill_dir")"
+    if [ -f "$skill_dir/SKILL.md" ]; then
+      cp -r "$skill_dir" "$target/$skill_name"
+    fi
+  done
+
+  ok "Installed skills to ${target}/"
+}
+
+# Interactive mode
+run_interactive() {
+  echo ""
+  echo -e "${BOLD}${CYAN}  ╔═══════════════════════════════════════╗${NC}"
+  echo -e "${BOLD}${CYAN}  ║         SpecForge Framework           ║${NC}"
+  echo -e "${BOLD}${CYAN}  ╚═══════════════════════════════════════╝${NC}"
+  echo ""
+
+  # Detect tools
+  local detected
+  detected="$(detect_tools)"
+  if [ -n "$detected" ]; then
+    info "Detected AI tools: ${detected}"
+  else
+    warn "No AI coding tools detected. Installing for Claude Code by default."
+    detected="claude-code"
+  fi
+  echo ""
+
+  # Tool selection
+  echo "Which AI tool do you want to install for?"
+  echo "  1) Claude Code"
+  echo "  2) Cursor"
+  echo "  3) Codex"
+  echo "  4) All detected"
+  echo ""
+  read -rp "Choose [1-4, default=1]: " choice
+  case "${choice:-1}" in
+    1) TOOL="claude-code" ;;
+    2) TOOL="cursor" ;;
+    3) TOOL="codex" ;;
+    4) TOOL="all" ;;
+    *) TOOL="claude-code" ;;
+  esac
+
+  # Scope selection
+  echo ""
+  echo "Install scope:"
+  echo "  1) Project-level (current directory)"
+  echo "  2) Global (user-level, available in all projects)"
+  echo ""
+  read -rp "Choose [1-2, default=1]: " scope
+  case "${scope:-1}" in
+    2) INSTALL_SCOPE="global" ;;
+    *) INSTALL_SCOPE="project" ;;
+  esac
+
+  echo ""
+}
+
+# Run installation
+run_install() {
+  case "$TOOL" in
+    claude-code) install_claude_code ;;
+    cursor)      install_cursor ;;
+    codex)       install_codex ;;
+    all)
+      local detected
+      detected="$(detect_tools)"
+      for t in $detected; do
+        case "$t" in
+          claude-code) install_claude_code ;;
+          cursor)      install_cursor ;;
+          codex)       install_codex ;;
+        esac
+      done
+      if [ -z "$detected" ]; then
+        install_claude_code
+      fi
+      ;;
+    *)
+      err "Unknown tool: $TOOL"
+      exit 1
+      ;;
+  esac
+}
+
+# Print getting started message
+print_getting_started() {
+  echo ""
+  echo -e "${BOLD}${MAGENTA}  Getting Started${NC}"
+  echo -e "  ${DIM}━━━━━━━━━━━━━━━━${NC}"
+  echo ""
+  echo "  Available commands:"
+  echo -e "    ${CYAN}/specforge:discover${NC}        ${DIM}— Start with discovery & vision${NC}"
+  echo -e "    ${CYAN}/specforge:analyze-market${NC}  ${DIM}— Market & competitive analysis${NC}"
+  echo -e "    ${CYAN}/specforge:define-requirements${NC} ${DIM}— Requirements engineering${NC}"
+  echo -e "    ${CYAN}/specforge:design-ux${NC}       ${DIM}— UX & design specification${NC}"
+  echo -e "    ${CYAN}/specforge:design-architecture${NC} ${DIM}— Architecture & technical design${NC}"
+  echo -e "    ${CYAN}/specforge:plan-implementation${NC} ${DIM}— Implementation planning${NC}"
+  echo -e "    ${CYAN}/specforge:validate${NC}        ${DIM}— Cross-phase validation${NC}"
+  echo -e "    ${CYAN}/specforge:generate-all${NC}    ${DIM}— Full lifecycle orchestration${NC}"
+  echo ""
+  echo -e "  Start with: ${CYAN}/specforge:discover${NC}"
+  echo ""
+  info "Run ${CYAN}/specforge:generate-all${NC} for the full specification lifecycle."
+  echo ""
+}
+
+# Main
+main() {
+  # Verify skills directory exists
+  if [ ! -d "$SKILLS_DIR" ]; then
+    err "Skills directory not found at ${SKILLS_DIR}"
+    err "Are you running this from the specforge root?"
+    exit 1
+  fi
+
+  if [ "$INTERACTIVE" = true ]; then
+    run_interactive
+  fi
+
+  if [ -z "$TOOL" ]; then
+    TOOL="claude-code"
+  fi
+
+  run_install
+  print_getting_started
+}
+
+main
