@@ -1,5 +1,5 @@
 {
-  "name": "specforge",
+  "name": "specforge-framework",
   "version": "0.1.0",
   "description": "Comprehensive framework for crafting production-ready software specifications — from market analysis through architecture to implementation planning",
   "keywords": [
@@ -21,7 +21,8 @@
   "author": "SpecForge Contributors",
   "type": "module",
   "bin": {
-    "specforge": "./bin/cli.js"
+    "specforge": "./bin/cli.js",
+    "specforge-framework": "./bin/cli.js"
   },
   "files": [
     "bin/",

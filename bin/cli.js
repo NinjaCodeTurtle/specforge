@@ -467,12 +467,12 @@ ${bold('General:')}
   --version, -v     Show version number
 
 ${bold('Examples:')}
-  ${dim('$')} npx specforge init
-  ${dim('$')} npx specforge init --tool claude-code --yes
-  ${dim('$')} npx specforge init --tool all --global
-  ${dim('$')} npx specforge init --skills discover,define-requirements
-  ${dim('$')} npx specforge list
-  ${dim('$')} npx specforge update
+  ${dim('$')} npx specforge-framework init
+  ${dim('$')} npx specforge-framework init --tool claude-code --yes
+  ${dim('$')} npx specforge-framework init --tool all --global
+  ${dim('$')} npx specforge-framework init --skills discover,define-requirements
+  ${dim('$')} npx specforge-framework list
+  ${dim('$')} npx specforge-framework update
 `);
 }
 

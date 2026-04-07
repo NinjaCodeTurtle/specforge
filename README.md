@@ -36,6 +36,21 @@ The #1 cause of failed software projects is poor specifications. Teams rush to c
 
 ## Quick Start
 
+### Install into Your Project
+```bash
+# Via npx
+npx specforge-framework init
+
+# Non-interactive (Claude Code)
+npx specforge-framework init --tool claude-code --yes
+
+# Or install directly from GitHub
+npx github:NinjaCodeTurtle/specforge init --tool claude-code --yes
+
+# Or via Claude Code's /install command
+/install NinjaCodeTurtle/specforge
+```
+
 ### Full Lifecycle (Greenfield Product)
 ```
 /specforge:generate-all
