@@ -1,7 +1,7 @@
 ---
 document_type: quality-gates
 version: "1.0"
-applies_to: "phase-07-implementation"
+applies_to: "phase-07-implementation, add-feature"
 ---
 
 # Phase 7: Implementation Quality Gates
@@ -254,4 +254,75 @@ This structure catches problems early -- a failing story gate prevents a bad sto
 
 ### Release Recommendation
 [Go/No-Go with justification]
+```
+
+---
+
+## Tier 4: Feature Gate (per `/specforge:add-feature`)
+
+The Feature Gate is used when adding new features to an existing project via the `add-feature` workflow. It replaces Sprint/Release gates for single-feature work and emphasizes **regression safety**.
+
+### Scoring
+- **Scale**: 0-10 per item
+- **Threshold**: Average >= 7.0, no item below 4
+- **Items**: 10
+
+### Feature Gate Checklist
+
+| # | Criterion | Score (0-10) |
+|---|-----------|--------------|
+| 1 | All feature stories pass their story-level gates (Tier 1) | |
+| 2 | All acceptance criteria from Feature Spec have passing automated tests | |
+| 3 | All pre-existing tests still pass — zero regressions introduced | |
+| 4 | No new TODO/FIXME/HACK comments in codebase | |
+| 5 | API changes are backward-compatible (or migration path documented) | |
+| 6 | Data model changes have reversible migrations (up + down) | |
+| 7 | Cumulative code coverage has not decreased from pre-feature baseline | |
+| 8 | No critical or high severity security findings from scans | |
+| 9 | All Feature Spec requirements fully implemented — no partial delivery | |
+| 10 | CI/CD pipeline passes all stages with the feature included | |
+
+### Common Failure Reasons
+
+| Item | Common Failure | Remediation |
+|------|---------------|-------------|
+| 1 | Story skipped self-review | Go back, run full self-review checklist |
+| 3 | Existing test broken by new code | Fix the regression — do not skip or disable the test |
+| 5 | API breaking change without versioning | Add backward-compatible endpoint or version the API |
+| 6 | Migration has no down path | Write the reversible migration before proceeding |
+| 7 | Coverage dropped | Add tests for uncovered paths in new code |
+| 9 | Feature partially delivered | Implement remaining requirements or explicitly descope with user approval |
+
+### Feature Gate Evaluation Template
+
+```markdown
+## Feature Gate — [Feature Name]
+
+**Date:** [YYYY-MM-DD]
+**Feature Spec:** output/23-feature-spec-[name].md
+**Stories Completed:** [N] / [N]
+
+| # | Criterion | Score | Notes |
+|---|-----------|-------|-------|
+| 1 | All stories pass story gates | | |
+| 2 | All acceptance criteria tested | | |
+| 3 | Zero regressions (existing tests pass) | | |
+| 4 | No new TODO/FIXME/HACK | | |
+| 5 | API backward-compatible | | |
+| 6 | Migrations reversible | | |
+| 7 | Coverage not decreased | | |
+| 8 | No critical/high security findings | | |
+| 9 | Feature Spec fully implemented | | |
+| 10 | CI/CD pipeline green | | |
+
+**Average Score:** [X.X] / 10
+**Minimum Score:** [X] (Item #[N])
+**Result:** PASS / FAIL
+
+### Regression Summary
+- **Pre-feature test count:** [N]
+- **Post-feature test count:** [N] (+[N] new)
+- **Pre-feature coverage:** [X]%
+- **Post-feature coverage:** [X]%
+- **Regressions found:** [N] (must be 0 to pass)
 ```

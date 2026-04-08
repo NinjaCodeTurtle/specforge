@@ -11,18 +11,19 @@ SpecForge is a comprehensive framework for crafting production-ready software sp
 - `/specforge:design-architecture` — Run Phase 5: Architecture & Technical Design
 - `/specforge:plan-implementation` — Run Phase 6: Implementation Planning
 - `/specforge:implement` — Run Phase 7: Implementation (code, test, verify)
+- `/specforge:add-feature` — Add a new feature to an existing project (spec, implement, verify)
 - `/specforge:validate` — Cross-phase validation and quality gate check
 - `/specforge:generate-all` — Full lifecycle orchestration (all 7 phases)
 
 ## Project Structure
 ```
-templates/           — 22 production-grade document templates (01-22)
+templates/           — 24 production-grade document templates (01-24)
 framework/
   phases/            — Phase guides (01-07) with README.md each
-  agents/            — 8 agent definitions (strategist through implementation-lead)
+  agents/            — 9 agent definitions (strategist through feature-engineer)
   checklists/        — Quality gate checklists, readiness assessment, implementation gates
-  workflows/         — Full lifecycle, quick-spec, and brownfield workflows
-skills/              — 9 skill definitions (SKILL.md files for slash commands)
+  workflows/         — Full lifecycle, quick-spec, brownfield, and add-feature workflows
+skills/              — 10 skill definitions (SKILL.md files for slash commands)
 output/              — Generated documents go here (per-project)
 examples/            — Example outputs for reference
 project/             — Project management docs (plan, decisions, progress)
@@ -38,7 +39,7 @@ project/             — Project management docs (plan, decisions, progress)
 ## Conventions
 - Template files use YAML frontmatter for metadata
 - HTML comments (`<!-- -->`) in templates contain guidance to be removed in final output
-- Requirement IDs follow the pattern: REQ-XXX, US-XXX, UC-XXX, EPIC-XXX
+- Requirement IDs follow the pattern: REQ-XXX, US-XXX, UC-XXX, EPIC-XXX, FR-FEAT-XXX, US-FEAT-XXX
 - All generated documents should be saved to `output/[project-name]/`
 - Phase transitions require quality gate validation (minimum 7/10 average score)
 

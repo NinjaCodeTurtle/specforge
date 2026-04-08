@@ -5,6 +5,19 @@ All notable changes to this repository will be documented in this file.
 The format is based on Keep a Changelog and the repository uses calendar dates
 for documentation releases.
 
+## 2026-04-08 (v0.3.0)
+
+### Added
+
+- `/specforge:add-feature` command for adding features to existing projects
+- Feature Engineer agent ("Extender") with 9 principles including regression safety
+- 2 new templates (23-24): Feature Spec (consolidated single-doc), Feature Delivery Report
+- Feature Gate (Tier 4) quality checklist with 10 regression-focused items
+- Add-feature workflow document with escalation triggers
+- Impact analysis as a first-class concept (architecture, API, data model, code, tests)
+
+---
+
 ## 2026-04-07 (v0.2.0)
 
 ### Added

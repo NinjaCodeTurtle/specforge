@@ -96,6 +96,13 @@ SpecForge synthesizes best practices from three leading frameworks:
 **Artifacts**: Project Scaffold Report, Story Implementation Reports, Sprint Verification Reports, Release Verification Report, Progress Tracker, Dependency Manifest, CI/CD Pipeline Spec
 **Key Activities**: Project scaffolding, story-by-story coding, test writing (unit/integration/e2e), self-review, three-tier quality gates (Story → Sprint → Release), progress tracking
 
+### Post-Implementation: Add Feature
+**Agent**: Feature Engineer ("Extender")
+**Purpose**: Add new end-to-end features to an existing SpecForge project
+**Artifacts**: Feature Spec, Story Implementation Reports, Feature Delivery Report
+**Key Activities**: Codebase analysis, impact analysis, feature specification, story-by-story implementation, regression testing, Feature Gate verification
+**Skill**: `/specforge:add-feature`
+
 ## Quality Gates
 
 Every phase transition requires passing a scored checklist. The **Orchestrator** agent enforces these gates:
@@ -146,11 +153,12 @@ Starts with discovery of existing system, then runs Phases 3-6. Use when adding 
 | Solutions Architect | Builder | 5 | Technical soundness | "Can we build this reliably at scale?" |
 | Delivery Manager | Planner | 6 | Delivery readiness | "Can the team execute this plan?" |
 | Implementation Lead | Engineer | 7 | Code quality & spec fidelity | "Does the code faithfully implement every spec?" |
+| Feature Engineer | Extender | Post-7 | Feature delivery without regression | "Does this feature work without breaking anything?" |
 | Orchestrator | — | All | Cross-phase coordination | "Are we ready for the next phase?" |
 
 ## Template Library
 
-SpecForge provides 22 production-grade templates in `templates/`:
+SpecForge provides 24 production-grade templates in `templates/`:
 
 | # | Template | Phase | Purpose |
 |---|----------|-------|---------|
@@ -176,6 +184,8 @@ SpecForge provides 22 production-grade templates in `templates/`:
 | 20 | Implementation Progress Tracker | 7 | Living progress tracking document |
 | 21 | Dependency Manifest | 7 | Justified dependency documentation |
 | 22 | CI/CD Pipeline Spec | 7 | Pipeline configuration and quality thresholds |
+| 23 | Feature Spec | Post-7 | Consolidated spec for a new feature (requirements + impact + plan) |
+| 24 | Feature Delivery Report | Post-7 | Feature verification and regression report |
 
 ## End-to-End Coverage
 
