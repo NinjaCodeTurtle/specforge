@@ -12,18 +12,19 @@ SpecForge is a comprehensive framework for crafting production-ready software sp
 - `/specforge:plan-implementation` — Run Phase 6: Implementation Planning
 - `/specforge:implement` — Run Phase 7: Implementation (code, test, verify)
 - `/specforge:add-feature` — Add a new feature to an existing project (spec, implement, verify)
+- `/specforge:test-coverage` — Analyze testing gaps, create test plan, implement missing tests, verify coverage
 - `/specforge:validate` — Cross-phase validation and quality gate check
 - `/specforge:generate-all` — Full lifecycle orchestration (all 7 phases)
 
 ## Project Structure
 ```
-templates/           — 24 production-grade document templates (01-24)
+templates/           — 26 production-grade document templates (01-26)
 framework/
   phases/            — Phase guides (01-07) with README.md each
-  agents/            — 9 agent definitions (strategist through feature-engineer)
-  checklists/        — Quality gate checklists, readiness assessment, implementation gates
-  workflows/         — Full lifecycle, quick-spec, brownfield, and add-feature workflows
-skills/              — 10 skill definitions (SKILL.md files for slash commands)
+  agents/            — 10 agent definitions (strategist through test-coverage-analyst)
+  checklists/        — Quality gate checklists, readiness assessment, implementation/coverage gates
+  workflows/         — Full lifecycle, quick-spec, brownfield, add-feature, and test-coverage workflows
+skills/              — 11 skill definitions (SKILL.md files for slash commands)
 output/              — Generated documents go here (per-project)
 examples/            — Example outputs for reference
 project/             — Project management docs (plan, decisions, progress)

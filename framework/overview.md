@@ -103,6 +103,13 @@ SpecForge synthesizes best practices from three leading frameworks:
 **Key Activities**: Codebase analysis, impact analysis, feature specification, story-by-story implementation, regression testing, Feature Gate verification
 **Skill**: `/specforge:add-feature`
 
+### Post-Implementation: Test Coverage
+**Agent**: Test Coverage Analyst ("Inspector")
+**Purpose**: Analyze testing gaps, implement missing tests, enforce coverage standards
+**Artifacts**: Test Coverage Plan, Test Coverage Report
+**Key Activities**: Tech stack detection, coverage baseline measurement, gap analysis by risk, test implementation (unit/integration/e2e), CI/CD coverage enforcement
+**Skill**: `/specforge:test-coverage`
+
 ## Quality Gates
 
 Every phase transition requires passing a scored checklist. The **Orchestrator** agent enforces these gates:
@@ -154,11 +161,12 @@ Starts with discovery of existing system, then runs Phases 3-6. Use when adding 
 | Delivery Manager | Planner | 6 | Delivery readiness | "Can the team execute this plan?" |
 | Implementation Lead | Engineer | 7 | Code quality & spec fidelity | "Does the code faithfully implement every spec?" |
 | Feature Engineer | Extender | Post-7 | Feature delivery without regression | "Does this feature work without breaking anything?" |
+| Test Coverage Analyst | Inspector | Post-7 | Testing completeness & quality | "Is every critical path tested with meaningful assertions?" |
 | Orchestrator | — | All | Cross-phase coordination | "Are we ready for the next phase?" |
 
 ## Template Library
 
-SpecForge provides 24 production-grade templates in `templates/`:
+SpecForge provides 26 production-grade templates in `templates/`:
 
 | # | Template | Phase | Purpose |
 |---|----------|-------|---------|
@@ -186,6 +194,8 @@ SpecForge provides 24 production-grade templates in `templates/`:
 | 22 | CI/CD Pipeline Spec | 7 | Pipeline configuration and quality thresholds |
 | 23 | Feature Spec | Post-7 | Consolidated spec for a new feature (requirements + impact + plan) |
 | 24 | Feature Delivery Report | Post-7 | Feature verification and regression report |
+| 25 | Test Coverage Plan | Post-7 | Gap analysis and prioritized test plan |
+| 26 | Test Coverage Report | Post-7 | Coverage improvement verification and CI/CD config |
 
 ## End-to-End Coverage
 

@@ -15,6 +15,7 @@ const EXPECTED_SKILLS = [
   { dir: 'plan-implementation',  name: 'specforge:plan-implementation' },
   { dir: 'implement',            name: 'specforge:implement' },
   { dir: 'add-feature',          name: 'specforge:add-feature' },
+  { dir: 'test-coverage',        name: 'specforge:test-coverage' },
   { dir: 'validate',             name: 'specforge:validate' },
   { dir: 'generate-all',         name: 'specforge:generate-all' },
 ];

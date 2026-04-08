@@ -18,6 +18,7 @@ const SKILLS = [
   'plan-implementation',
   'implement',
   'add-feature',
+  'test-coverage',
   'validate',
   'generate-all',
 ];
@@ -106,7 +107,7 @@ describe('CLI — bin/cli.js', () => {
       const base = join(tmp, '.claude', 'commands');
       assert.ok(existsSync(base), `Expected ${base} to exist`);
       const files = readdirSync(base).filter(f => f.startsWith('specforge:'));
-      assert.ok(files.length >= 10, `Expected at least 10 specforge command files, got ${files.length}`);
+      assert.ok(files.length >= 11, `Expected at least 11 specforge command files, got ${files.length}`);
       assert.ok(
         existsSync(join(base, 'specforge:discover.md')),
         'Expected specforge:discover.md command file',

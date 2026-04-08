@@ -5,6 +5,19 @@ All notable changes to this repository will be documented in this file.
 The format is based on Keep a Changelog and the repository uses calendar dates
 for documentation releases.
 
+## 2026-04-08 (v0.4.0)
+
+### Added
+
+- `/specforge:test-coverage` command for codebase testing gap analysis and implementation
+- Test Coverage Analyst agent ("Inspector") with 9 principles focused on meaningful testing
+- 2 new templates (25-26): Test Coverage Plan, Test Coverage Report
+- Coverage Gate quality checklist with 8 testing-specific criteria
+- Test-coverage workflow document with tech stack auto-detection guidance
+- Works on any codebase — does not require SpecForge Phase 1-7 artifacts
+
+---
+
 ## 2026-04-08 (v0.3.0)
 
 ### Added

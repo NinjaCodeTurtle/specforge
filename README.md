@@ -68,6 +68,8 @@ Runs all 7 phases with quality gates between each.
 /specforge:design-architecture   # Phase 5
 /specforge:plan-implementation   # Phase 6
 /specforge:implement             # Phase 7
+/specforge:add-feature           # Add feature to existing project
+/specforge:test-coverage         # Analyze & fill testing gaps
 ```
 
 ### Validation
